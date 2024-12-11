@@ -1,5 +1,5 @@
 # Dockerfile
-# Use a lightweight Python image
+# Use an official Python image as the base image
 FROM python:3.9-slim
 
 # Set working directory inside the container
@@ -8,11 +8,11 @@ WORKDIR /app
 # Copy the application code to the container
 COPY . /app
 
-# Install the dependencies
-RUN pip install -r requirements.txt
+# Install the required Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the Flask port
+# Expose the FastAPI default port
 EXPOSE 5000
 
-# Set the default command to run the Flask app
-CMD ["python", "app.py"]
+# Command to run FastAPI using Uvicorn (ASGI server)
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
